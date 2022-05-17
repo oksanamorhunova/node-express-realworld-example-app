@@ -29,11 +29,10 @@ app.use(session({ secret: 'conduit', cookie: { maxAge: 60000 }, resave: false, s
 if (!isProduction) {
   app.use(errorhandler());
 }
+let dbUri=process.env.MONGODB_URI || 'mongodb://localhost/conduit'
+mongoose.connect(dbUri);
 
-if(isProduction){
-  mongoose.connect(process.env.MONGODB_URI);
-} else {
-  mongoose.connect('mongodb://localhost/conduit');
+if(!isProduction){
   mongoose.set('debug', true);
 }
 
